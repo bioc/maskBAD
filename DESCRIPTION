@@ -1,0 +1,9 @@
+Package: maskBAD
+Version: 0.99.1
+Title: Masking probes with binding affinity differences
+Author: Michael Dannemann <michael_dannemann@eva.mpg.de>
+Maintainer: Michael Dannemann <michael_dannemann@eva.mpg.de>
+Depends: R (>= 2.10), gcrma (>= 2.27.1), affy
+Suggests: hgu95av2probe
+Description: Package includes functions to analyze and mask microarray expression data.
+License: GPL version 2 or newer
