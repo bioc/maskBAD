@@ -62,7 +62,7 @@ analysis pipeline.
 
 Detection of BAD (binding affinity difference) probes is done on an
 \Robject{AffyBatch} object, usually prepared with
-\Rfunction{ReadAffy()} from package \Rpackage{affy}. We'll use 50
+\Rfunction{ReadAffy()} from package \Rpackage{affy}. We'll use 100
 random probe sets from human and chimpanzee expression dataset
 (\cite{Khaitovich04}), each with 10 individuals, available with the
 package.
@@ -71,8 +71,8 @@ package.
 library("maskBAD")
 data(AffyBatch, package="maskBAD")
 data(exmask, package="maskBAD")
-## load(system.file("data/AffyBatch.rda", package="mask"))
-## load(system.file("data/exmask.rda", package="mask"))
+## load(system.file("data/AffyBatch.rda", package="maskBAD"))
+## load(system.file("data/exmask.rda", package="maskBAD"))
 @
 
 <<AffyBatch,echo=TRUE>>=
@@ -81,13 +81,13 @@ newAffyBatch
 exmask <- mask(newAffyBatch,ind=rep(1:2,each=10),verbose=FALSE,useExpr=F)
 @ 
 
-The scoring of probes will be performed with the function
-\Rfunction{mask} and is based on the algorithm we presented in
-Dannemann et. al (\cite{Dannemann09}). Briefly, for a given probe, its
-signal is proportional to the amount of RNA in the sample and its
-binding affinity. When one target is measured with several probes (a
-probe set), as on Affymetrix arrays, the probes' signal is correlated
-for each sample. BAD probes correlation differs between groups, hence
+The scoring of probes is performed with the function \Rfunction{mask}
+and is based on the algorithm presented in Dannemann et. al
+(\cite{Dannemann09}). Briefly, for a given probe, its signal is
+proportional to the amount of RNA in the sample and its binding
+affinity. When one target is measured with several probes (a probe
+set), as on Affymetrix arrays, the probes' signals are correlated for
+each sample. BAD probes correlation differs between groups, hence
 comparison of probes' pairwise correlations between those groups
 allows to identify of BAD probes. Function \Rfunction{mask()} detects
 probes differing in binding affinity between groups of samples defined
@@ -96,7 +96,7 @@ set basis as the expression signal for the same transcript should be
 correlated among probes. Therefore, to identify BAD probes use probe
 sets defined at transcript/gene level. \\
 The method works properly only for probe sets with signal above
-background in both groups, by default (\texttt{use.expr=TRUE} option)
+background in both groups. By default (\texttt{use.expr=TRUE} option)
 only probe sets with \Rfunction{mas5calls()} ``P'' in at least 90\% of
 samples from both groups are considered in BAD detection. Another
 desired set of probe sets might be specified by the parameter
@@ -106,14 +106,14 @@ desired set of probe sets might be specified by the parameter
 
 For human-chimpanzee, with assumption of sequence divergence 1\%,
 we'll expect naively $\sim$22\% of probes comprise a SNP. To filter
-out lower 22\% of quality scores, we have to put a cutoff at 0.022.
+out lower 22\% of quality scores, we have to put a cutoff at 0.029.
 
 <<quantile,echo=TRUE>>=
 quantile(exmask[[1]]$quality.score,0.22)
 @ 
 
 Manual inspection of borderline cases with \Rfunction{plotProbe()}
-might help to decide about a cutoff. It plots signal intensity of a
+might help to decide about the cutoff. It plots signal intensity of a
 probe against all other probes from the same probe set.
 
 <<quantile,echo=TRUE>>=
@@ -121,8 +121,8 @@ probe against all other probes from the same probe set.
 rownames(exmask[[1]]) <-apply(exmask[[1]][,c("x","y")],1,
                               function(x)paste(x[1],x[2],sep="."))
 ## filtering for probes around the choosen cutoff
-probesToSee = rownames(exmask[[1]][exmask[[1]]$quality.score<0.023 
-  & exmask[[1]]$quality.score >0.021,])
+probesToSee = rownames(exmask[[1]][exmask[[1]]$quality.score<0.03 
+  & exmask[[1]]$quality.score >0.028,])
 ## select a random probe and plot it against 
 ## all other probes of its probe set
 plotProbe(affy=newAffyBatch,probeset=as.character(exmask[[1]][ probesToSee[1],"probeset"]),
@@ -146,12 +146,12 @@ head(sequenceMask)
 rownames(sequenceMask) <- paste(sequenceMask$x,sequenceMask$y,sep="_")
 rownames(exmask$probes)<- paste(exmask$probes$x,exmask$probes$y,sep="_") 
 
-cutoff=0.022
+cutoff=0.029
 table((exmask$probes[rownames(sequenceMask),"quality.score"]>cutoff)+0,
       sequenceMask$match) 
 @
 
-Here, 709 probes are concordant between masks, whereas 51 probes with
+Here, 952 probes are concordant between masks, whereas 79 probes with
 known SNP are not detected by expression-based mask.\\\\
 
 With \Rfunction{overlapExprExtMasks()} expression mask may be
@@ -177,7 +177,7 @@ overlapExSeq <- overlapExprExtMasks(exmask$probes[,1:3],
 
 \begin{figure}
   \centering
-  \includegraphics[width=.7\textwidth]{mask-figErr}
+  \includegraphics[width=.7\textwidth]{maskBAD-figErr}
   \caption{Overlap of expression-based mask and external mask (red
     line), with binomial confidence intervals (dashed lines). Several
     cutoff levels are marked on the plot.}
@@ -229,8 +229,8 @@ lines(which(unique(overlapTests$testCutoff[[2]]) %in% overlapTests$testCutoff[[2
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{mask-figWil1}
-  \includegraphics[width=\textwidth]{mask-figWil2}
+  \includegraphics[width=\textwidth]{maskBAD-figWil1}
+  \includegraphics[width=\textwidth]{maskBAD-figWil2}
   \caption{Kolmogorow-Smirnov-Test (upper panel) and
     Wilcoxon-Rank-Sum-Test (lower panel) comparing distributions of
     quality scores of BAD and not BAD probes. For low cutoffs, two
@@ -245,7 +245,7 @@ hist(exmask[[1]]$quality.score,breaks=100,xlab="mask quality score",main="")
 
 \begin{figure}
   \centering
-  \includegraphics[width=.7\textwidth]{mask-figHist}
+  \includegraphics[width=.7\textwidth]{maskBAD-figHist}
   \caption{Probes' quality scores.}
   \label{figHist}
 \end{figure}
@@ -335,7 +335,7 @@ increases with number of probe sets, we recommend to use a subset of
 probe sets (specified with \texttt{exprlist}) for exon arrays.
 
 \bibliographystyle{plain}
-\bibliography{mask}
+\bibliography{maskBAD}
 
 \end{document}
 

@@ -1,0 +1,10 @@
+citHeader("To cite maskBAD in publications use:")
+citEntry(entry = "article",
+         author = "Dannemann M,  Lorenc A.,  Hellmann I.,  Khaitovich P.,  Lachmann M.",
+         title = "The effects of probe binding affinity differences on gene expression measurements and how to deal with them",
+	 journal = "Bioinformatics",
+         year   = "2009",
+         volume = "25",
+         pages = "2772--2779",
+         month = "Nov",
+         textVersion = "Dannemann, M. et al. (2009) Bioinformatics 25, 2772--2779.")
