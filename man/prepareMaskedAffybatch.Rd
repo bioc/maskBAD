@@ -47,7 +47,7 @@ prepareMaskedAffybatch(affy,cdfTablePath,exmask="none",cdfName="new_cdf",exclude
 \seealso{ \code{\link{mask}, \link{overlapExprExtMasks}, \link{plotProbe}}}
 \examples{
 ## prepare new affy batch after masking
-## using the expression mask object from the example of \link{mask}
+## using the expression mask object from the example of the mask function
 data(AffyBatch)
 data(exmask)
 ## AffyBatch object before masking
