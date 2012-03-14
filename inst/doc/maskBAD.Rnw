@@ -136,11 +136,11 @@ Mask might be calibrated with a subset of probes with known BAD status
 (called later on external mask), for example probes with target
 sequences known in both compared groups. External mask contains
 \texttt{x} and \texttt{y} coordinates for the probes, along with their
-BAD status coded as 1/0 (BAD probe/not BAD probe).  For a given
+BAD status coded as 1/0 (not BAD probe/BAD probe).  For a given
 cutoff, compare BAD status according to expression-based mask and
 external mask (here we use the object sequenceMask, containing the
-information whether the probe sequence is affected by a SNP between
-the groups (0) or not (1) ):
+information whether the probe sequence is affected by a SNP between the
+groups (0) or not (1) ):
 
 <<quantile,echo=TRUE>>=
 head(exmask$probes)
