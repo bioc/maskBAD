@@ -37,10 +37,13 @@
   removed from the data at preprocessing stage.  For details about
   impact of BAD (binding affinity difference) probes on differential
   gene expression estimates, implemented detection method and its
-  power to improve data quality, please consult our paper Dannemann,
-  Lorenc et. al: ``The effects of probe binding affinity differences
+  power to improve data quality, please consult our papers Dannemann,
+  Lorenc et al.: ``The effects of probe binding affinity differences
   on gene expression measurements and how to deal with them'',
-  Bioinformatics, 2009 (\cite{Dannemann09}).
+  Bioinformatics, 2009 (\cite{Dannemann09}) and Dannemann et al.:
+  ``'maskBAD' - a package to detect and remove Affymetrix probes with
+  binding affinity differences'', BMC Bioinformatics 2012
+  (\cite{Dannemann12}).
 \end{abstract}
 
 \section{Introduction}

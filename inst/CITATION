@@ -8,3 +8,14 @@ citEntry(entry = "article",
          pages = "2772--2779",
          month = "Nov",
          textVersion = "Dannemann, M. et al. (2009) Bioinformatics 25, 2772--2779.")
+
+citEntry(entry = "article",
+         author = "Dannemann M, Lachmann M., Lorenc A.",
+         title = "'maskBAD' - a package to detect and remove Affymetrix probes with binding affinity differences",
+         journal = "BMC Bioinformatics",
+         year   = "2012",
+         volume = "13",
+         pages = "56",
+         month = "April",
+         textVersion = "Dannemann, M. et al. (2012) BMC Bioinformatics 13:56.")
+
