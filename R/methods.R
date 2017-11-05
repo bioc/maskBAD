@@ -399,7 +399,7 @@ prepareMaskedAffybatch <- function(affy,cdfTablePath,exmask="none",cdfName="new_
           cat("Making env\n")
           nn=names(l)
           for(i in(1:length(nn) ) ) {
-            assign(nn[i],l[[i]],pos=env,inherit=FALSE)
+            assign(nn[i],l[[i]],pos=env,inherits=FALSE)
           }
           cat("finished making CDF!\n")
           return(env)
@@ -413,7 +413,7 @@ prepareMaskedAffybatch <- function(affy,cdfTablePath,exmask="none",cdfName="new_
           cat("Making env\n")
           nn=as.character(Ftab[,1])
           for(i in 1:length(nn)) {
-            assign(nn[i],pmm[i,,drop=FALSE],pos=env,inherit=FALSE)
+            assign(nn[i],pmm[i,,drop=FALSE],pos=env,inherits=FALSE)
           }
           cat("finished making CDF!\n")
           return(env)

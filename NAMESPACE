@@ -9,3 +9,12 @@ import(
   affy,
   gcrma
 )
+importFrom(
+    graphics, abline, layout, lines, mtext, plot, text
+)
+importFrom(
+    stats, ks.test, qbeta, quantile, t.test, wilcox.test
+)
+importFrom(
+    utils, read.table
+)
